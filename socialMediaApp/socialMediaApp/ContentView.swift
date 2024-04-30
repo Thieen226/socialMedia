@@ -23,6 +23,8 @@ struct ContentView: View {
     @State var showPassword: Bool = false
     @State var showView: Bool = false
     @State var disableLogIn: Bool = true
+    @State var loginValid: Bool = false
+    @State var showToast: Bool = false
     
     var body: some View {
         NavigationView{
@@ -66,6 +68,7 @@ struct ContentView: View {
                 .padding(.vertical) //add leading and trailing padding
                 
                 Button(action: {
+                    disableLogIn.toggle()
                     checkUserInfo()
                 }) {
                     Text("Log in")
@@ -80,7 +83,6 @@ struct ContentView: View {
                     
                 }
                 .disabled(disableLogIn)
-                
                 NavigationLink(destination: HomeView(), isActive: $showView){
                     EmptyView()
                 }
@@ -101,11 +103,34 @@ struct ContentView: View {
             }
         }
         .padding()
+        
+        .alert(isPresented: $showToast) {
+            Alert(
+                title: Text("Login Failed"),
+                message: Text("Your username or password is wrong")
+            )
+        }
     }
+    
     func checkUserInfo(){
         if !name.isEmpty && !pass.isEmpty{
-            disableLogIn = false
+            for info in loginUsers{
+                if info.username == name && info.password == pass{
+                    loginValid = true
+                    break
+                }
+                else{
+                    loginValid = false
+                }
+            }
+            if loginValid{
+                showView = true
+            }
+            else{
+                showToast = true
+            }
         }
+
         else{
             disableLogIn = true
         }
