@@ -22,7 +22,6 @@ struct ContentView: View {
     @State var pass: String = ""
     @State var showPassword: Bool = false
     @State var showView: Bool = false
-    @State var disableLogIn: Bool = true
     @State var loginValid: Bool = false
     @State var showToast: Bool = false
     
@@ -67,22 +66,19 @@ struct ContentView: View {
                 }
                 .padding(.vertical) //add leading and trailing padding
                 
-                Button(action: {
-                    disableLogIn.toggle()
+                Button("Log in", action: {
                     checkUserInfo()
-                }) {
-                    Text("Log in")
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(disableLogIn ? Color.gray : Color.blue)
-                        .foregroundColor(.white)
-                        .font(.system(size: 24))
-                        .border(Color.black.opacity(0.1))
-                        .cornerRadius(8)
-                        
+                }) 
+                .disabled(pass.isEmpty) //disable the log in button when no password is entered
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(pass.isEmpty ? Color.gray : Color.blue) //change the background of log in button
+                .foregroundColor(.white)
+                .font(.system(size: 24))
+                .border(Color.black.opacity(0.1))
+                .cornerRadius(8)
                     
-                }
-                .disabled(disableLogIn)
+                
                 NavigationLink(destination: HomeView(), isActive: $showView){
                     EmptyView()
                 }
@@ -90,7 +86,7 @@ struct ContentView: View {
                     .padding(.top, 25)
                     .padding(.bottom, 20)
                 
-                NavigationLink(destination: createAccount(), label: {
+                NavigationLink(destination: createAccount(newUser : $loginUsers), label: {
                     Text("Create an Account")
                         .padding()
                         .frame(maxWidth: .infinity)
@@ -130,11 +126,6 @@ struct ContentView: View {
                 showToast = true
             }
         }
-
-        else{
-            disableLogIn = true
-        }
-
     }
 }
 
