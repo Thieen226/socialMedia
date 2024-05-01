@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct createAccount: View {
-    @State var name : String = ""
-    @State var pass : String = ""
+    @State var newName : String = ""
+    @State var newPass : String = ""
     @State var showPassword : Bool = false
-    @Binding var newUser : [UserInfo]
+    @State var showToast : Bool = false
+    @Binding var newUser : [UserInfo] //modify the UserInfo array by adding newUser
+    @Environment(\.presentationMode) var presentationMode //control the presentation mode of the current page
     
     var body: some View {
         NavigationView{
@@ -20,7 +22,7 @@ struct createAccount: View {
                 Text("Create an Account")
                     .font(Font.custom("MadimiOne-Regular", size: 40))
                     .fontWeight(.bold)
-                TextField("Username", text: $name) //grab the username input
+                TextField("Username", text: $newName) //grab the username input
                     .padding()
                     .background(Color.gray.opacity(0.1))
                     .border(Color.black.opacity(0.1))
@@ -29,7 +31,7 @@ struct createAccount: View {
                
                 HStack{
                     if showPassword{ //if showPassword is true, then show it
-                        TextField("Password", text: $pass) //grab the password input
+                        TextField("Password", text: $newPass) //grab the password input
                             .padding()
                             .background(Color.gray.opacity(0.1))
                             .border(Color.black.opacity(0.1))
@@ -37,7 +39,7 @@ struct createAccount: View {
                             .autocapitalization(.none)
                     }
                     else{
-                        SecureField("Password", text: $pass) //not letting users to see the password
+                        SecureField("Password", text: $newPass) //not letting users to see the password
                             .padding()
                             .background(Color.gray.opacity(0.1))
                             .border(Color.black.opacity(0.1))
@@ -47,13 +49,13 @@ struct createAccount: View {
                     Button{
                         showPassword.toggle() //change showPassword to true to allow users see their passwords
                     }label: {
-                        Image(systemName: showPassword ? "eye.slash" : "eye")
+                        Image(systemName: showPassword ? "eye" : "eye.slash")
                     }
                     
                 }
                 .padding(.vertical)
                 
-                NavigationLink(destination: ContentView(), label: {
+                NavigationLink(destination: ContentView(), label: { //if create button is clicked move back to login page
                     Text("Create")
                         .padding()
                         .frame(maxWidth: .infinity)
@@ -71,10 +73,25 @@ struct createAccount: View {
             .padding()
             .navigationTitle("BeMe")
             .navigationBarTitleDisplayMode(.inline)
+
+            
+            .alert(isPresented: $showToast){
+                Alert(
+                    title: Text("Create Failed"),
+                    message: Text("Enter your username or password!"))
+            }
         }
     }
     func createUser(){
-        
+        if newName.isEmpty || newPass.isEmpty{ //if name or pass is empty, show alert
+            showToast = true
+        }
+        else{
+            showToast = false
+            let newAccount = UserInfo(username: newName, password: newPass) //create variable to hold new user info
+            newUser.append(newAccount) //append newAccount to UserInfo
+            presentationMode.wrappedValue.dismiss() //dismisses the current page
+        }
     }
 }
 

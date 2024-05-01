@@ -39,7 +39,7 @@ struct ContentView: View {
                     .background(Color.gray.opacity(0.1))
                     .border(Color.black.opacity(0.1))
                     .cornerRadius(8)
-                    .autocapitalization(.none)
+                    .autocapitalization(.none) //turn off the auto capitalize
                 
                 HStack{
                     if showPassword{ //if showPassword is true, then show it
@@ -61,7 +61,7 @@ struct ContentView: View {
                     Button{
                         showPassword.toggle() //change showPassword to true to allow users see their passwords
                     }label: {
-                        Image(systemName: showPassword ? "eye.slash" : "eye")
+                        Image(systemName: showPassword ? "eye" : "eye.slash")
                     }
                 }
                 .padding(.vertical) //add leading and trailing padding
@@ -77,24 +77,21 @@ struct ContentView: View {
                 .font(.system(size: 24))
                 .border(Color.black.opacity(0.1))
                 .cornerRadius(8)
-                    
                 
-                NavigationLink(destination: HomeView(), isActive: $showView){
+                NavigationLink(destination: HomeView(), isActive: $showView){ //move to home page when login successed
                     EmptyView()
                 }
                 Text("OR")
                     .padding(.top, 25)
                     .padding(.bottom, 20)
                 
-                NavigationLink(destination: createAccount(newUser : $loginUsers), label: {
-                    Text("Create an Account")
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .font(.system(size: 24))
-                        .border(Color.black.opacity(0.1))
-                        .cornerRadius(8)
+                Text("Don't have an account")
+                    .font(.system(size: 24))
+                    .padding()
+                
+                NavigationLink(destination: createAccount(newUser : $loginUsers), label: { //move to create account page
+                    Text("Create HERE")
+
                 })
             }
         }
@@ -109,9 +106,9 @@ struct ContentView: View {
     }
     
     func checkUserInfo(){
-        if !name.isEmpty && !pass.isEmpty{
+        if !name.isEmpty || !pass.isEmpty{ //check if username or password input is empty
             for info in loginUsers{
-                if info.username == name && info.password == pass{
+                if info.username == name && info.password == pass{ //check if the name and password input is correct
                     loginValid = true
                     break
                 }
@@ -119,11 +116,19 @@ struct ContentView: View {
                     loginValid = false
                 }
             }
-            if loginValid{
+            //reset the username and password input
+            
+            
+            if loginValid{ //if login is valid then change showView to true to move to home page
+                name = ""
+                pass = ""
                 showView = true
+                
             }
-            else{
+            else{ //if invalid show alert
                 showToast = true
+                name = ""
+                pass = ""
             }
         }
     }
