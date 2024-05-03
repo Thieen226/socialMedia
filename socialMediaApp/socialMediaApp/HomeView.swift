@@ -17,32 +17,21 @@ struct Post{
 struct HomeView: View {
     @State private var posts: [Post] = [
         Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true),
-        Post(userImage: "therock", userName: "The Rock", content: "therockPost", caption: "Look at this boy", hasImage: true),
+        Post(userImage: "therock", userName: "The Rock", content: "therockPost", caption: "Look at this boy", hasImage: false),
         Post(userImage: "thieen", userName: "Thieen", content: "corgiPost", caption: "Corgi iz da bezt", hasImage: true)
     ]
     
     var body: some View {
-        NavigationView{
-            VStack{
-                
+        NavigationStack{
+            ScrollView{
+                LazyVStack{
+                    ForEach(posts.indices, id:\.self){ i in
+                        PostView(post: posts[i])
+                    }
+                }
+                .navigationTitle("BeMe")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            
-            .navigationTitle("BeMe")
-            .navigationBarTitleDisplayMode(.inline)
-        }
-        TabView{
-            Text("Home")
-                .tabItem {
-                    Image(systemName: "house")
-                }
-            Text("Upload Post")
-                .tabItem {
-                    Image(systemName: "plus.square")
-                }
-            Text("Profile")
-                .tabItem {
-                    Image(systemName: "person")
-                }
         }
     }
 }
