@@ -18,11 +18,12 @@ struct TabPage: View {
                 .tabItem {
                     Image(systemName: "plus.square")
                 }
-            Text("Profile")
+            ProfileView()
                 .tabItem {
                     Image(systemName: "person")
                 }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

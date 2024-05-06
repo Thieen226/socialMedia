@@ -37,25 +37,31 @@ struct ContentView: View {
                 TextField("Username", text: $name) //grab the username input
                     .padding()
                     .background(Color.gray.opacity(0.1))
-                    .border(Color.black.opacity(0.1))
-                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.gray, lineWidth: 0.5)
+                    )
                     .autocapitalization(.none) //turn off the auto capitalize
+                    .padding()
                 
                 HStack{
                     if showPassword{ //if showPassword is true, then show it
                         TextField("Password", text: $pass) //grab the password input
-                            .padding()
                             .background(Color.gray.opacity(0.1))
-                            .border(Color.black.opacity(0.1))
-                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.gray, lineWidth: 0.5)
+                            )
                             .autocapitalization(.none)
                     }
                     else{
                         SecureField("Password", text: $pass) //not letting users to see the password
                             .padding()
                             .background(Color.gray.opacity(0.1))
-                            .border(Color.black.opacity(0.1))
-                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.gray, lineWidth: 0.5)
+                            )
                             .autocapitalization(.none)
                     }
                     Button{
@@ -64,7 +70,7 @@ struct ContentView: View {
                         Image(systemName: showPassword ? "eye" : "eye.slash")
                     }
                 }
-                .padding(.vertical) //add leading and trailing padding
+                .padding(.horizontal)
                 
                 Button("Log in", action: {
                     checkUserInfo()
@@ -77,8 +83,9 @@ struct ContentView: View {
                 .font(.system(size: 24))
                 .border(Color.black.opacity(0.1))
                 .cornerRadius(8)
+                .padding()
                 
-                NavigationLink(destination: HomeView(), isActive: $showView){ //move to home page when login successed
+                NavigationLink(destination: TabPage(), isActive: $showView){ //move to home page when login successed
                     EmptyView()
                 }
                 Text("OR")
@@ -91,11 +98,11 @@ struct ContentView: View {
                 
                 NavigationLink(destination: createAccount(newUser : $loginUsers), label: { //move to create account page
                     Text("Create HERE")
-
+                        .underline(true)
                 })
             }
+            .navigationBarBackButtonHidden(true)
         }
-        .padding()
         
         .alert(isPresented: $showToast) {
             Alert(

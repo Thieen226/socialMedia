@@ -25,8 +25,10 @@ struct createAccount: View {
                 TextField("Username", text: $newName) //grab the username input
                     .padding()
                     .background(Color.gray.opacity(0.1))
-                    .border(Color.black.opacity(0.1))
-                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.gray, lineWidth: 0.5)
+                    )
                     .autocapitalization(.none)
                
                 HStack{
@@ -34,16 +36,20 @@ struct createAccount: View {
                         TextField("Password", text: $newPass) //grab the password input
                             .padding()
                             .background(Color.gray.opacity(0.1))
-                            .border(Color.black.opacity(0.1))
-                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.gray, lineWidth: 0.5)
+                            )
                             .autocapitalization(.none)
                     }
                     else{
                         SecureField("Password", text: $newPass) //not letting users to see the password
                             .padding()
                             .background(Color.gray.opacity(0.1))
-                            .border(Color.black.opacity(0.1))
-                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.gray, lineWidth: 0.5)
+                            )
                             .autocapitalization(.none)
                     }
                     Button{

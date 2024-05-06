@@ -12,21 +12,22 @@ struct PostView: View {
     @State var like: Bool = false
     var body: some View {
         VStack{
-            HStack{
+            HStack{ //username and their profile img
                 Image(post.userImage)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 60, height: 40)
+                    .frame(width: 80, height: 40)
                     .clipShape(Circle())
                 
                 Text(post.userName)
+                    .padding(.leading, -20)
                     .font(.footnote)
                     .fontWeight(.semibold)
                 
                 Spacer()
             }
             
-            if post.hasImage{
+            if post.hasImage{ //post img
                 Image(post.content)
                     .resizable()
                     .scaledToFit()
@@ -35,22 +36,22 @@ struct PostView: View {
                     .clipShape(Rectangle())
                     
             }
-            else{
+            else{ //post text
                 Text(post.content)
+                    .padding(.horizontal, 10)
                     .frame(width: 370, height: 100, alignment: .leading)
                     .foregroundColor(.black)
                     .background(.gray.opacity(0.1))
                     .cornerRadius(6)
-                    .padding(.leading, 1)
             }
             
-            HStack (spacing: 16){
+            HStack (spacing: 16){ //like and comment buttons
                 Button{
                     like.toggle()
                 }label: {
                     Image(systemName: like ? "heart.fill" : "heart")
                         .imageScale(.large)
-                        .foregroundColor(.red)
+                        .foregroundColor(like ? .red : .black)
                         
                 }
                 Button{
@@ -64,10 +65,10 @@ struct PostView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 1)
-            .padding(.leading, 5)
+            .padding(.leading, 10)
             .foregroundColor(.black)
             
-            HStack {
+            HStack { //username and caption
                 Text(post.userName)
                     .fontWeight(.semibold)
                 Text(post.caption)
@@ -75,9 +76,10 @@ struct PostView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(.footnote)
             .padding(.top, 1)
-            .padding(.leading, 5)
+            .padding(.leading, 10)
+
         }
-        .padding(.top, 50)
+        .padding(.bottom, 30)
     }
 }
 
