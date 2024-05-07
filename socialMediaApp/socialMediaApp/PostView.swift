@@ -7,9 +7,26 @@
 
 import SwiftUI
 
+struct UserProfile{
+    var userName: String
+    var userImg: String
+    var followers: Int
+    var following: Int
+    var post: Int
+    var bio: String
+}
+
 struct PostView: View {
     @State var post: Post
     @State var like: Bool = false
+    @State var userFound: Bool = false
+    
+    @State private var profiles : [UserProfile] = [
+        UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
+        UserProfile(userName: "The Rock", userImg: "therock", followers: 20, following: 8, post: 1, bio: "I am The Rock"),
+        UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever")
+    ]
+    
     var body: some View {
         VStack{
             HStack{ //username and their profile img
@@ -17,12 +34,19 @@ struct PostView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 40)
-                    .clipShape(Circle())
+                    .clipShape(Circle())                   
                 
-                Text(post.userName)
+                Button(post.userName, action: {
+                    checkUser()
+                })
                     .padding(.leading, -20)
                     .font(.footnote)
                     .fontWeight(.semibold)
+                    .foregroundColor(.black)
+                
+                NavigationLink(destination: ProfileView(user: profiles[0]), isActive: $userFound){ //move to home page when login successed
+                    EmptyView()
+                }
                 
                 Spacer()
             }
@@ -80,6 +104,9 @@ struct PostView: View {
 
         }
         .padding(.bottom, 30)
+    }
+    func checkUser(){
+        
     }
 }
 

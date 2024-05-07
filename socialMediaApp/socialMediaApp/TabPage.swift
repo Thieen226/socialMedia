@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TabPage: View {
+    @State var user : UserProfile
     var body: some View {
         TabView{
             HomeView()
@@ -18,7 +19,7 @@ struct TabPage: View {
                 .tabItem {
                     Image(systemName: "plus.square")
                 }
-            ProfileView()
+            ProfileView(user: user)
                 .tabItem {
                     Image(systemName: "person")
                 }
@@ -28,5 +29,5 @@ struct TabPage: View {
 }
 
 #Preview {
-    TabPage()
+    TabPage(user: UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"))
 }

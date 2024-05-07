@@ -14,6 +14,7 @@ struct Post{
     var caption: String
     var hasImage: Bool
 }
+
 struct HomeView: View {
     @State private var posts: [Post] = [
         Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true),
