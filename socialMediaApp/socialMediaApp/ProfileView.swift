@@ -9,6 +9,11 @@ import SwiftUI
 
 struct ProfileView: View {
     @State var user : UserProfile
+    let gridItems = [
+        GridItem(.fixed(120), spacing: 10, alignment: nil),
+        GridItem(.fixed(120), spacing: 10, alignment: nil),
+        GridItem(.fixed(120), spacing: 10, alignment: nil)
+     ]
     
     var body: some View {
         NavigationStack{
@@ -67,17 +72,27 @@ struct ProfileView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 1)
                 
-                Button("Edit profile", action: {
-                    
-                })
-                .frame(maxWidth: 350, maxHeight: 32)
-                .foregroundColor(.black)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(.gray, lineWidth: 1)
-                )
+//                Button("Edit profile", action: {
+//                    
+//                })
+//                .frame(maxWidth: 350, maxHeight: 32)
+//                .foregroundColor(.black)
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 6)
+//                        .stroke(.gray, lineWidth: 1)
+//                    
+//                )
+//                .padding(.bottom, 10)
                 
+                LazyVGrid(columns: gridItems, spacing: 10){
+                    ForEach(0...5, id: \.self){index in
+                        Image("johncena")
+                            .resizable()
+                            .scaledToFit()
+                    }
+                }
                 Spacer()
+
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)

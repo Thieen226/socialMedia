@@ -20,6 +20,7 @@ struct PostView: View {
     @State var post: Post
     @State var like: Bool = false
     @State var userFound: Bool = false
+    @State private var profile : UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
     
     @State private var profiles : [UserProfile] = [
         UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
@@ -37,14 +38,14 @@ struct PostView: View {
                     .clipShape(Circle())                   
                 
                 Button(post.userName, action: {
-                    checkUser()
+                    searchUser(userName: post.userName)
                 })
                     .padding(.leading, -20)
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
                 
-                NavigationLink(destination: ProfileView(user: profiles[0]), isActive: $userFound){ //move to home page when login successed
+                NavigationLink(destination: ProfileView(user: profile), isActive: $userFound){ //move to user profile page when login successed
                     EmptyView()
                 }
                 
@@ -105,8 +106,14 @@ struct PostView: View {
         }
         .padding(.bottom, 30)
     }
-    func checkUser(){
-        
+                               
+    func searchUser(userName: String){
+        for user in profiles{
+            if user.userName == userName{
+                profile = user
+                userFound = true
+            }
+        }
     }
 }
 
