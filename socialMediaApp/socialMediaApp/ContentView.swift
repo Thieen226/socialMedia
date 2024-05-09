@@ -7,15 +7,22 @@
 
 import SwiftUI
 
-struct UserInfo: Hashable{ //struct that holds username and password
+struct UserInfo{ //struct that holds username and password
     var username: String
     var password: String
+    var posts: [Post]
 }
 struct ContentView: View {
     @State private var loginUsers = [ //array of username and password
-        UserInfo(username: "thieen", password: "12345"),
-        UserInfo(username: "johncena", password: "0369"),
-        UserInfo(username: "therock", password: "45689")
+        UserInfo(username: "thieen", password: "12345", posts: [
+            Post(userImage: "thieen", userName: "Thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)
+        ]),
+        UserInfo(username: "johncena", password: "0369", posts: [
+            Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true)
+        ]),
+        UserInfo(username: "therock", password: "45689", posts: [
+            Post(userImage: "thieen", userName: "Thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)
+        ])
     ]
     //create variables
     @State var name: String = ""
@@ -24,6 +31,7 @@ struct ContentView: View {
     @State var showView: Bool = false
     @State var loginValid: Bool = false
     @State var showToast: Bool = false
+    @State var loggedInUser : [UserInfo] = [] //keep track who logins
     
     var body: some View {
         NavigationView{
@@ -117,6 +125,8 @@ struct ContentView: View {
             for info in loginUsers{
                 if info.username == name && info.password == pass{ //check if the name and password input is correct
                     loginValid = true
+                    loggedInUser.append(info)
+                    print(loggedInUser)
                     break
                 }
                 else{

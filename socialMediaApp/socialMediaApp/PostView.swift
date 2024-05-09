@@ -22,6 +22,7 @@ struct PostView: View {
     @State var userFound: Bool = false
     @State private var profile : UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
     
+    
     @State private var profiles : [UserProfile] = [
         UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
         UserProfile(userName: "The Rock", userImg: "therock", followers: 20, following: 8, post: 1, bio: "I am The Rock"),
@@ -45,7 +46,7 @@ struct PostView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
                 
-                NavigationLink(destination: ProfileView(user: profile), isActive: $userFound){ //move to user profile page when login successed
+                NavigationLink(destination: ProfileView(user: profile, loggedIn: [], tabSelected: 1), isActive: $userFound){ //move to user profile page when login successed
                     EmptyView()
                 }
                 

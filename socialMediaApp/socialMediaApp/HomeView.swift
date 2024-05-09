@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Post{
+struct Post: Hashable{
     var userImage: String
     var userName: String
     var content: String

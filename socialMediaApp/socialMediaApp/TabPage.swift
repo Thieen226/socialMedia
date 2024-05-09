@@ -9,20 +9,24 @@ import SwiftUI
 
 struct TabPage: View {
     @State var user : UserProfile
+    @State private var tabSelected: Int = 1
     var body: some View {
-        TabView{
+        TabView(selection: $tabSelected){
             HomeView()
                 .tabItem {
                     Image(systemName: "house")
                 }
+                .tag(1)
             Text("Upload Post")
                 .tabItem {
                     Image(systemName: "plus.square")
                 }
-            ProfileView(user: user)
+                .tag(2)
+            ProfileView(user: user, loggedIn: [], tabSelected: tabSelected)
                 .tabItem {
                     Image(systemName: "person")
                 }
+                .tag(3)
         }
         .navigationBarBackButtonHidden(true)
     }

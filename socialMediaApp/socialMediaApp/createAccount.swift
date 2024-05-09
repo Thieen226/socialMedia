@@ -12,6 +12,7 @@ struct createAccount: View {
     @State var newPass : String = ""
     @State var showPassword : Bool = false
     @State var showToast : Bool = false
+    @State var showView : Bool = false
     @Binding var newUser : [UserInfo] //modify the UserInfo array by adding newUser
     @Environment(\.presentationMode) var presentationMode //control the presentation mode of the current page
     
@@ -61,7 +62,7 @@ struct createAccount: View {
                 }
                 .padding(.vertical)
                 
-                NavigationLink(destination: ContentView(), label: { //if create button is clicked move back to login page
+                NavigationLink(destination: ContentView(), label: {
                     Text("Create")
                         .padding()
                         .frame(maxWidth: .infinity)
@@ -94,9 +95,12 @@ struct createAccount: View {
         }
         else{
             showToast = false
-            let newAccount = UserInfo(username: newName, password: newPass) //create variable to hold new user info
+            let newAccount = UserInfo(username: newName, password: newPass, posts: []) //create variable to hold new user info
             newUser.append(newAccount) //append newAccount to UserInfo
             presentationMode.wrappedValue.dismiss() //dismisses the current page
+            showView = true
+            print(newUser)
+
         }
     }
 }
