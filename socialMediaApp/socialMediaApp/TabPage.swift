@@ -19,7 +19,7 @@ struct TabPage: View {
                     Image(systemName: "house")
                 }
                 .tag(1)
-            Text("Upload Post")
+            AddPost(loggedIn: loggedInfo, user: user)
                 .tabItem {
                     Image(systemName: "plus.square")
                 }

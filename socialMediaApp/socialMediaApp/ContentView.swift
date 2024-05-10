@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UserInfo{ //struct that holds username and password
+struct UserInfo: Hashable{ //struct that holds username and password
     var username: String
     var password: String
     var posts: [Post]
