@@ -16,6 +16,7 @@ struct Post: Hashable{
 }
 
 struct HomeView: View {
+    @State var loggedInfo : [UserInfo]
     @State private var posts: [Post] = [
         Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true),
         Post(userImage: "therock", userName: "The Rock", content: "therockPost", caption: "The sexy one is always on the right", hasImage: true),
@@ -27,7 +28,7 @@ struct HomeView: View {
             ScrollView{
                 LazyVStack{
                     ForEach(posts.indices, id:\.self){ i in
-                        PostView(post: posts[i])
+                        PostView(post: posts[i], loggedInfo: loggedInfo)
                     }
                 }
                 .navigationTitle("BeMe")
@@ -39,5 +40,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(loggedInfo: [])
 }

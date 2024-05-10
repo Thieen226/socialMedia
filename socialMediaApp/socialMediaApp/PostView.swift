@@ -21,7 +21,7 @@ struct PostView: View {
     @State var like: Bool = false
     @State var userFound: Bool = false
     @State private var profile : UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
-    
+    @State var loggedInfo : [UserInfo]
     
     @State private var profiles : [UserProfile] = [
         UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
@@ -119,5 +119,5 @@ struct PostView: View {
 }
 
 #Preview {
-    PostView(post: Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true))
+    PostView(post: Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true), loggedInfo: [])
 }

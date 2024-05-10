@@ -10,9 +10,11 @@ import SwiftUI
 struct TabPage: View {
     @State var user : UserProfile
     @State private var tabSelected: Int = 1
+    @State var loggedInfo : [UserInfo]
+    
     var body: some View {
         TabView(selection: $tabSelected){
-            HomeView()
+            HomeView(loggedInfo: loggedInfo)
                 .tabItem {
                     Image(systemName: "house")
                 }
@@ -22,7 +24,7 @@ struct TabPage: View {
                     Image(systemName: "plus.square")
                 }
                 .tag(2)
-            ProfileView(user: user, loggedIn: [], tabSelected: tabSelected)
+            ProfileView(user: user, loggedIn: loggedInfo, tabSelected: tabSelected)
                 .tabItem {
                     Image(systemName: "person")
                 }
@@ -33,5 +35,5 @@ struct TabPage: View {
 }
 
 #Preview {
-    TabPage(user: UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"))
+    TabPage(user: UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"), loggedInfo: [])
 }

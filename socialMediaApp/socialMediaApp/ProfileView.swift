@@ -12,6 +12,7 @@ struct ProfileView: View {
     @State var loggedIn : [UserInfo]
     @State var tabSelected : Int
     @State var isFollowed : Bool = false
+
     
     let gridItems = [
         GridItem(.fixed(120), spacing: 10, alignment: nil),
@@ -92,15 +93,17 @@ struct ProfileView: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 1)
                     
-                    Button(action: {
-                        checkFollowers()
-                    }, label: {
-                        Text( isFollowed ? "Unfollow" : "Following")
-                            .foregroundColor(.black)
-                    })
+                    if user.userName != loggedIn[0].posts[0].userName{
+                        Button(action: {
+                            checkFollowers()
+                        }, label: {
+                            Text( isFollowed ? "Unfollow" : "Following")
+                                .foregroundColor(.black)
+                        })
+                    }
                     
                     LazyVGrid(columns: gridItems, spacing: 2){
-                        ForEach(loggedIn.first?.posts ?? [], id: \.self){post in
+                        ForEach(loggedIn[0].posts, id: \.self){post in
                             Text(post.content)
 //                                .resizable()
 //                                .scaledToFit()
@@ -118,8 +121,9 @@ struct ProfileView: View {
     }
     func checkFollowers(){
         isFollowed.toggle()
-        if(isFollowed){
+        if(isFollowed && user.userName != loggedIn[0].posts[0].userName){
             user.following += 1
+            print("fd")
         }
         else{
             user.following -= 1

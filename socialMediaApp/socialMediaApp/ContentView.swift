@@ -21,9 +21,10 @@ struct ContentView: View {
             Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true)
         ]),
         UserInfo(username: "therock", password: "45689", posts: [
-            Post(userImage: "thieen", userName: "Thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)
+            Post(userImage: "therock", userName: "The Rock", content: "therockPost", caption: "The sexy one is always on the right", hasImage: true)
         ])
     ]
+    
     //create variables
     @State var name: String = ""
     @State var pass: String = ""
@@ -93,7 +94,7 @@ struct ContentView: View {
                 .cornerRadius(8)
                 .padding()
                 
-                NavigationLink(destination: TabPage(user: UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me")), isActive: $showView){ //move to home page when login successed
+                NavigationLink(destination: TabPage(user: UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"), loggedInfo: loggedInUser), isActive: $showView){ //move to home page when login successed
                     EmptyView()
                 }
                 Text("OR")
