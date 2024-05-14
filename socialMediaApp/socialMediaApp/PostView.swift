@@ -22,12 +22,8 @@ struct PostView: View {
     @State var userFound: Bool = false
     @State private var profile : UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
     @State var loggedInfo : [UserInfo]
-    
-    @State private var profiles : [UserProfile] = [
-        UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
-        UserProfile(userName: "The Rock", userImg: "therock", followers: 20, following: 8, post: 1, bio: "I am The Rock"),
-        UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever")
-    ]
+    @State var profiles : [UserProfile]
+
     
     var body: some View {
         VStack{
@@ -109,8 +105,11 @@ struct PostView: View {
     }
                                
     func searchUser(userName: String){
+        
         for user in profiles{
+           
             if user.userName == userName{
+                print("found match")
                 profile = user
                 userFound = true
             }
@@ -119,5 +118,5 @@ struct PostView: View {
 }
 
 #Preview {
-    PostView(post: Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true), loggedInfo: [])
+    PostView(post: Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true), loggedInfo: [], profiles: [])
 }

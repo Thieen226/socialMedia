@@ -11,6 +11,7 @@ struct AddPost: View {
     @State var loggedIn: [UserInfo]
     var user : UserProfile
     @State var thoughts: String = ""
+    @State var profiles : [UserProfile]
     
     var body: some View {
         VStack {
@@ -33,7 +34,7 @@ struct AddPost: View {
                 .padding(.top, -70)
                 .frame(maxWidth: .infinity, maxHeight: 150)
             
-            NavigationLink(destination: TabPage(user: user, loggedInfo: loggedIn), label:{
+            NavigationLink(destination: TabPage(user: user, loggedInfo: loggedIn, profiles: profiles), label:{
                 Text("Add Post")
                     .frame(maxWidth: 100, maxHeight: 50)
                     .background(Color.blue)
@@ -47,5 +48,5 @@ struct AddPost: View {
 
 
 #Preview {
-    AddPost(loggedIn: [], user: UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever"))
+    AddPost(loggedIn: [], user: UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever"), profiles: [])
 }

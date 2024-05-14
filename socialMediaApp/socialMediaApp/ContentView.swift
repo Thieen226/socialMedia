@@ -25,6 +25,14 @@ struct ContentView: View {
         ])
     ]
     
+    @State private var profiles : [UserProfile] = [
+        UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
+        UserProfile(userName: "The Rock", userImg: "therock", followers: 20, following: 8, post: 1, bio: "I am The Rock"),
+        UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever")
+    ]
+    
+    @State private var user: UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
+    
     //create variables
     @State var name: String = ""
     @State var pass: String = ""
@@ -94,7 +102,7 @@ struct ContentView: View {
                 .cornerRadius(8)
                 .padding()
                 
-                NavigationLink(destination: TabPage(user: UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"), loggedInfo: loggedInUser), isActive: $showView){ //move to home page when login successed
+                NavigationLink(destination: TabPage(user: user, loggedInfo: loggedInUser, profiles: profiles), isActive: $showView){ //move to home page when login successed
                     EmptyView()
                 }
                 Text("OR")
@@ -127,6 +135,7 @@ struct ContentView: View {
                 if info.username == name && info.password == pass{ //check if the name and password input is correct
                     loginValid = true
                     loggedInUser.append(info)
+                    user = UserProfile(userName: info.username, userImg: info.posts.first?.userImage ?? "", followers: 0, following: 0, post: info.posts.count, bio: "")
                     print(loggedInUser)
                     break
                 }
@@ -134,7 +143,6 @@ struct ContentView: View {
                     loginValid = false
                 }
             }
-            //reset the username and password input
             
             
             if loginValid{ //if login is valid then change showView to true to move to home page

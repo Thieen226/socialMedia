@@ -22,13 +22,14 @@ struct HomeView: View {
         Post(userImage: "therock", userName: "The Rock", content: "therockPost", caption: "The sexy one is always on the right", hasImage: true),
         Post(userImage: "thieen", userName: "Thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)
     ]
+    @State var profiles : [UserProfile]
     
     var body: some View {
         NavigationStack{
             ScrollView{
                 LazyVStack{
                     ForEach(posts.indices, id:\.self){ i in
-                        PostView(post: posts[i], loggedInfo: loggedInfo)
+                        PostView(post: posts[i], loggedInfo: loggedInfo, profiles: profiles)
                     }
                 }
                 .navigationTitle("BeMe")
@@ -40,5 +41,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(loggedInfo: [])
+    HomeView(loggedInfo: [], profiles: [])
 }
