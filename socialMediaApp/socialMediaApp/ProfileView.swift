@@ -27,7 +27,7 @@ struct ProfileView: View {
                     HStack{ //user img and their followers
                          
                         if tabSelected == 3 && loggedIn.count != 0 {
-                            Image(loggedIn[0].posts[0].userImage)
+                            Image(user.userImg)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 130, height: 70)

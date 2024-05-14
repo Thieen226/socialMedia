@@ -135,7 +135,21 @@ struct ContentView: View {
                 if info.username == name && info.password == pass{ //check if the name and password input is correct
                     loginValid = true
                     loggedInUser.append(info)
-                    user = UserProfile(userName: info.username, userImg: info.posts.first?.userImage ?? "", followers: 0, following: 0, post: info.posts.count, bio: "")
+                    
+                    for profile in profiles {
+                        if profile.userName == info.username{
+                            user = UserProfile(
+                                userName : info.username,
+                                userImg : info.posts.first?.userImage ?? "",
+                                followers: profile.followers,
+                                following: profile.following,
+                                post: profile.post,
+                                bio: profile.bio
+                            )
+                            break
+                        }
+                    }
+                    
                     print(loggedInUser)
                     break
                 }
