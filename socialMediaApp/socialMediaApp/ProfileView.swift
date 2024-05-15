@@ -26,7 +26,7 @@ struct ProfileView: View {
                 VStack{
                     HStack{ //user img and their followers
                          
-                        if tabSelected == 3 && loggedIn.count != 0 {
+                        if loggedIn.count != 0 {
                             Image(user.userImg)
                                 .resizable()
                                 .scaledToFit()
@@ -40,11 +40,6 @@ struct ProfileView: View {
                                 .frame(width: 130, height: 70)
                                 .clipShape(Circle())
                         }
-//                        Image(user.userImg)
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 130, height: 70)
-//                            .clipShape(Circle())
                         
                         Spacer()
                         
@@ -105,10 +100,11 @@ struct ProfileView: View {
                     LazyVGrid(columns: gridItems, spacing: 2){
                         ForEach(loggedIn[0].posts, id: \.self){post in
                             Text(post.content)
-//                                .resizable()
-//                                .scaledToFit()
-//                                .cornerRadius(3.0)
-//                                .border(Color.black)
+                                .padding()
+                                .frame(width: 370, height: 100)
+                                .foregroundColor(.black)
+                                .background(.gray.opacity(0.1))
+                                .cornerRadius(6)
                         }
                     }
                     Spacer()

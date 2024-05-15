@@ -15,20 +15,20 @@ struct UserInfo: Hashable{ //struct that holds username and password
 struct ContentView: View {
     @State private var loginUsers = [ //array of username and password
         UserInfo(username: "thieen", password: "12345", posts: [
-            Post(userImage: "thieen", userName: "Thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)
+            Post(userImage: "thieen", userName: "thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)
         ]),
         UserInfo(username: "johncena", password: "0369", posts: [
-            Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true)
+            Post(userImage: "johncena", userName: "johncena", content: "youcantseeme", caption: "You can't see me", hasImage: true)
         ]),
         UserInfo(username: "therock", password: "45689", posts: [
-            Post(userImage: "therock", userName: "The Rock", content: "therockPost", caption: "The sexy one is always on the right", hasImage: true)
+            Post(userImage: "therock", userName: "therock", content: "therockPost", caption: "The sexy one is always on the right", hasImage: true)
         ])
     ]
     
     @State private var profiles : [UserProfile] = [
-        UserProfile(userName: "John Cena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
-        UserProfile(userName: "The Rock", userImg: "therock", followers: 20, following: 8, post: 1, bio: "I am The Rock"),
-        UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever")
+        UserProfile(userName: "johncena", userImg: "johncena", followers: 10, following: 5, post: 1, bio: "You can't see me"),
+        UserProfile(userName: "therock", userImg: "therock", followers: 20, following: 8, post: 1, bio: "I am The Rock"),
+        UserProfile(userName: "thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever")
     ]
     
     @State private var user: UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
@@ -102,7 +102,7 @@ struct ContentView: View {
                 .cornerRadius(8)
                 .padding()
                 
-                NavigationLink(destination: TabPage(user: user, loggedInfo: loggedInUser, profiles: profiles), isActive: $showView){ //move to home page when login successed
+                NavigationLink(destination: TabPage(user: user, loggedInfo: loggedInUser, profiles: profiles, users: $loginUsers), isActive: $showView){ //move to home page when login successed
                     EmptyView()
                 }
                 Text("OR")
@@ -150,7 +150,7 @@ struct ContentView: View {
                         }
                     }
                     
-                    print(loggedInUser)
+                    
                     break
                 }
                 else{

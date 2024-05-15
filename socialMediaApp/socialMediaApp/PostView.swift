@@ -21,7 +21,7 @@ struct PostView: View {
     @State var like: Bool = false
     @State var userFound: Bool = false
     @State private var profile : UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
-    @State var loggedInfo : [UserInfo]
+    @State var loggedInfo : UserInfo
     @State var profiles : [UserProfile]
 
     
@@ -42,7 +42,7 @@ struct PostView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
                 
-                NavigationLink(destination: ProfileView(user: profile, loggedIn: [], tabSelected: 1), isActive: $userFound){ //move to user profile page when login successed
+                NavigationLink(destination: ProfileView(user: profile, loggedIn: loggedInfo, tabSelected: 1), isActive: $userFound){ //move to user profile page when login successed
                     EmptyView()
                 }
                 
