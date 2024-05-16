@@ -106,7 +106,7 @@ struct PostView: View {
                                
     func searchUser(userName: String){        
         for user in profiles{
-            if user.userName == userName{
+            if user.userName == userName && user.userName != loggedInfo[0].username{
                 profile = user
                 userFound = true
             }

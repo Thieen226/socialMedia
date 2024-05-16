@@ -95,19 +95,30 @@ struct ProfileView: View {
                         }, label: {
                             Text( isFollowed ? "Unfollow" : "Following")
                                 .foregroundColor(.black)
+                                .fontWeight(.semibold)
+                                .frame(width: 360, height: 32)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .stroke(.gray, lineWidth: 1)
+                                )
                         })
+                        
+                        ForEach(loggedIn[0].posts, id: \.self){post in
+                            VStack{
+                                Text(post.content)
+                                    .frame(width: 370, height: 100)
+                                    .foregroundColor(.black)
+                                    .background(.gray.opacity(0.1))
+                                    .cornerRadius(6)
+                            }
                     }
                     
-                    LazyVGrid(columns: gridItems, spacing: 2){
-                        ForEach(loggedIn[0].posts, id: \.self){post in
-                            Text(post.content)
-                                .padding()
-                                .frame(width: 370, height: 100)
-                                .foregroundColor(.black)
-                                .background(.gray.opacity(0.1))
-                                .cornerRadius(6)
+                  
+                        
+                          
                         }
-                    }
+                       
+                    
                     Spacer()
                     
                 }
