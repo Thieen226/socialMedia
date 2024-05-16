@@ -21,7 +21,7 @@ struct PostView: View {
     @State var like: Bool = false
     @State var userFound: Bool = false
     @State private var profile : UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
-    @State var loggedInfo : UserInfo
+    @State var loggedInfo : [UserInfo]
     @State var profiles : [UserProfile]
 
     
@@ -104,12 +104,9 @@ struct PostView: View {
         .padding(.bottom, 30)
     }
                                
-    func searchUser(userName: String){
-        
+    func searchUser(userName: String){        
         for user in profiles{
-           
             if user.userName == userName{
-                print("found match")
                 profile = user
                 userFound = true
             }

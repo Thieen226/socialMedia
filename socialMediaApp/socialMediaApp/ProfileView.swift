@@ -90,6 +90,7 @@ struct ProfileView: View {
                     
                     if user.userName != loggedIn[0].posts[0].userName{
                         Button(action: {
+
                             checkFollowers()
                         }, label: {
                             Text( isFollowed ? "Unfollow" : "Following")
@@ -118,11 +119,10 @@ struct ProfileView: View {
     func checkFollowers(){
         isFollowed.toggle()
         if(isFollowed && user.userName != loggedIn[0].posts[0].userName){
-            user.following += 1
-            print("fd")
+            user.followers += 1
         }
         else{
-            user.following -= 1
+            user.followers -= 1
         }
     }
 }

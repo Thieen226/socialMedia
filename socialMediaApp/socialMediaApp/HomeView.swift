@@ -16,7 +16,7 @@ struct Post: Hashable{
 }
 
 struct HomeView: View {
-    @Binding var loggedInfo : UserInfo
+    @Binding var loggedInfo : [UserInfo]
     @State var profiles : [UserProfile]
     var users : [UserInfo]
     
@@ -46,5 +46,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(loggedInfo: .constant(UserInfo(username: "", password: "", posts: [Post(userImage: "thieen", userName: "thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)])), profiles: [], users: [])
+    HomeView(loggedInfo: .constant([UserInfo(username: "", password: "", posts: [Post(userImage: "thieen", userName: "thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)])]), profiles: [], users: [])
 }

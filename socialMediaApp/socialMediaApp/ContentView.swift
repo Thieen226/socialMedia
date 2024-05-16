@@ -102,7 +102,7 @@ struct ContentView: View {
                 .cornerRadius(8)
                 .padding()
                 
-                NavigationLink(destination: TabPage(user: user, loggedInfo: loggedInUser, profiles: profiles, users: $loginUsers), isActive: $showView){ //move to home page when login successed
+                NavigationLink(destination: TabPage(user: $user, loggedInfo: $loggedInUser, profiles: profiles, users: $loginUsers), isActive: $showView){ //move to home page when login successed
                     EmptyView()
                 }
                 Text("OR")

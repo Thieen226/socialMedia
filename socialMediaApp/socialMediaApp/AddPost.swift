@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddPost: View {
-    @Binding var loggedIn: UserInfo
-    var user : UserProfile
+    @Binding var loggedIn: [UserInfo]
+    @Binding var user : UserProfile
     @State var thoughts: String = ""
     @State var caption: String = ""
     @Binding var users: [UserInfo]
@@ -76,7 +76,7 @@ struct AddPost: View {
             for i in users.indices{
                 if users[i].username == user.userName{
                     users[i].posts.append(newPost)
-                    loggedIn.posts.append(newPost)
+                    loggedIn[0].posts.append(newPost)
                     alertTitle = "Post uploaded!"
                     alertMessage = "Your post has been uploaded."
                     isPostAdded = true
@@ -88,13 +88,19 @@ struct AddPost: View {
         caption = ""
         showToast = true
         
-//        if (isPostAdded){
-//            user.post += 1
-//        }
+        if (isPostAdded){
+            for i in users.indices{
+                if users[i].username == user.userName{
+                    user.post += 1
+                    print(user.post)
+                }
+            }
+            
+        }
     }
 }
 
 
 #Preview {
-    AddPost(loggedIn: .constant(UserInfo(username: "", password: "", posts: [Post(userImage: "thieen", userName: "thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)])), user: UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever"), users: .constant([]))
+    AddPost(loggedIn: .constant([UserInfo(username: "", password: "", posts: [Post(userImage: "thieen", userName: "thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)])]), user: .constant(UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever")), users: .constant([]))
 }
