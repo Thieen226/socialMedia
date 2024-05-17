@@ -102,7 +102,7 @@ struct ContentView: View {
                 .cornerRadius(8)
                 .padding()
                 
-                NavigationLink(destination: TabPage(user: $user, loggedInfo: $loggedInUser, profiles: profiles, users: $loginUsers), isActive: $showView){ //move to home page when login successed
+                NavigationLink(destination: TabPage(user: $user, loggedInfo: $loggedInUser, profiles: profiles, users: $loginUsers, profile: UserInfo(username: "", password: "", posts: [])), isActive: $showView){ //move to home page when login successed
                     EmptyView()
                 }
                 Text("OR")
@@ -136,9 +136,9 @@ struct ContentView: View {
                     loginValid = true
                     loggedInUser.append(info)
                     
-                    for profile in profiles {
-                        if profile.userName == info.username{
-                            user = UserProfile(
+                    for profile in profiles { //search the user in UserProfiles
+                        if profile.userName == info.username{ //check if any username in profiles matches logged in username
+                            user = UserProfile( //pass data of logged in user
                                 userName : info.username,
                                 userImg : info.posts.first?.userImage ?? "",
                                 followers: profile.followers,

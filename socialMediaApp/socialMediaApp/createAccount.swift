@@ -82,7 +82,7 @@ struct createAccount: View {
             .navigationBarTitleDisplayMode(.inline)
 
             
-            .alert(isPresented: $showToast){
+            .alert(isPresented: $showToast){ //show alert when the the password or username is empty
                 Alert(
                     title: Text("Create Failed"),
                     message: Text("Enter your username or password!"))
@@ -99,7 +99,7 @@ struct createAccount: View {
             newUser.append(newAccount) //append newAccount to UserInfo
             presentationMode.wrappedValue.dismiss() //dismisses the current page
             showView = true
-            print(newUser)
+          
 
         }
     }

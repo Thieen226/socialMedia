@@ -16,6 +16,7 @@ struct UserProfile{
     var bio: String
 }
 
+//create variables
 struct PostView: View {
     @State var post: Post
     @State var like: Bool = false
@@ -23,6 +24,8 @@ struct PostView: View {
     @State private var profile : UserProfile = UserProfile(userName: "", userImg: "", followers: 0, following: 0, post: 0, bio: "")
     @State var loggedInfo : [UserInfo]
     @State var profiles : [UserProfile]
+    @State var users : [UserInfo]
+    @State var userInfo : UserInfo = UserInfo(username: "", password: "", posts: [Post(userImage: "", userName: "", content: "", caption: "", hasImage: false)])
 
     
     var body: some View {
@@ -34,7 +37,7 @@ struct PostView: View {
                     .frame(width: 80, height: 40)
                     .clipShape(Circle())                   
                 
-                Button(post.userName, action: {
+                Button(post.userName, action: { //when the user click on the one of the other usernames, it will go to their profile page
                     searchUser(userName: post.userName)
                 })
                     .padding(.leading, -20)
@@ -42,7 +45,7 @@ struct PostView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
                 
-                NavigationLink(destination: ProfileView(user: profile, loggedIn: loggedInfo, tabSelected: 1), isActive: $userFound){ //move to user profile page when login successed
+                NavigationLink(destination: ProfileView(user: profile, loggedIn: loggedInfo, tabSelected: 1, users: users, profile: userInfo), isActive: $userFound){ //move to user profile page when login successed
                     EmptyView()
                 }
                 
@@ -76,7 +79,7 @@ struct PostView: View {
                         .foregroundColor(like ? .red : .black)
                         
                 }
-                Button{
+                Button{ //comment button
                     print("Comment")
                 }label: {
                     Image(systemName: "bubble.right")
@@ -105,15 +108,20 @@ struct PostView: View {
     }
                                
     func searchUser(userName: String){        
-        for user in profiles{
-            if user.userName == userName && user.userName != loggedInfo[0].username{
-                profile = user
+        for user in profiles{ //search the user in the UserProfile
+            if user.userName == userName && user.userName != loggedInfo[0].username{ //check if the clicked username same as the username in the array and it is not the one who logs in
+                profile = user //pass the data from the profile to user
                 userFound = true
+            }
+        }
+        for i in users.indices{
+            if userName == users[i].username{
+                userInfo = users[i]
             }
         }
     }
 }
 
 #Preview {
-    PostView(post: Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true), loggedInfo: [], profiles: [])
+    PostView(post: Post(userImage: "johncena", userName: "John Cena", content: "youcantseeme", caption: "You can't see me", hasImage: true), loggedInfo: [], profiles: [], users: [UserInfo(username: "", password: "", posts: [Post(userImage: "thieen", userName: "thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)])])
 }

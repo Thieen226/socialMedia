@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddPost: View {
+    //create varibles
     @Binding var loggedIn: [UserInfo]
     @Binding var user : UserProfile
     @State var thoughts: String = ""
@@ -21,6 +22,7 @@ struct AddPost: View {
     var body: some View {
         VStack {
             HStack(spacing: -20){
+                //user img and username
                 Image(user.userImg)
                     .resizable()
                     .scaledToFit()
@@ -33,19 +35,21 @@ struct AddPost: View {
                     .fontWeight(.semibold)
                 
             }
-            
+            //textfield for new post content
             TextField("What's in your mind?", text: $thoughts)
                 .padding()
                 .padding(.top, -70)
                 .frame(maxWidth: .infinity, maxHeight: 150)
-                .border(Color.black)
             
+            Divider() //seperate the content and caption textfields
+            
+            //textfield for new caption
             TextField("Write a caption", text: $caption)
                 .padding()
                 .cornerRadius(8)
             
             Button(action: {
-                createPost()
+                createPost() //call this func when button is clicked
             }, label: {
                 Text("Add Post")
                     .frame(maxWidth: 100, maxHeight: 50)
@@ -57,7 +61,7 @@ struct AddPost: View {
         }
         
         
-        .alert(isPresented: $showToast){
+        .alert(isPresented: $showToast){ //show alert depending on different situations
             Alert(
                 title: Text(alertTitle),
                 message: Text(alertMessage)
@@ -65,25 +69,28 @@ struct AddPost: View {
         }
     }
     func createPost(){
-        if thoughts.isEmpty && caption.isEmpty{
+        if thoughts.isEmpty || caption.isEmpty{ //if either textfield is empty show alert
             showToast = true
             alertTitle = "No post is uploaded!"
             alertMessage = "Please write something"
         }
         else{
             showToast = false
-            let newPost = Post(userImage: user.userImg, userName: user.userName, content: thoughts, caption: caption, hasImage: false)
+            let newPost = Post(userImage: user.userImg, userName: user.userName, content: thoughts, caption: caption, hasImage: false) //create variable to pass the new data
             for i in users.indices{
-                if users[i].username == user.userName{
-                    users[i].posts.append(newPost)
-                    loggedIn[0].posts.append(newPost)
-                    alertTitle = "Post uploaded!"
-                    alertMessage = "Your post has been uploaded."
+                if users[i].username == user.userName{ //search the user name in the UserProfile
+                    users[i].posts.append(newPost) //add new post in the UserProfile array
+                  //add new post in the UserInfo array
+                    alertTitle = "Post uploaded!" //alert when post is uploaded
+                    alertMessage = "Your post has been uploaded." //alert when post is uploaded
                     isPostAdded = true
                     break
                 }
             }
+            loggedIn[0].posts.append(newPost)
         }
+        
+        //reset textfield when post is uploaded
         thoughts = ""
         caption = ""
         showToast = true

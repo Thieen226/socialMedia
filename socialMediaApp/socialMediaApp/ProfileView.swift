@@ -12,40 +12,25 @@ struct ProfileView: View {
     @State var loggedIn : [UserInfo]
     @State var tabSelected : Int
     @State var isFollowed : Bool = false
-
-    
-    let gridItems = [
-        GridItem(.fixed(120), spacing: 10, alignment: nil),
-        GridItem(.fixed(120), spacing: 10, alignment: nil),
-        GridItem(.fixed(120), spacing: 10, alignment: nil)
-     ]
+    @State var users : [UserInfo]
+    @State var profile : UserInfo
     
     var body: some View {
         NavigationStack{
             ScrollView{
                 VStack{
                     HStack{ //user img and their followers
-                         
-                        if loggedIn.count != 0 {
                             Image(user.userImg)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 130, height: 70)
                                 .clipShape(Circle())
-                        }
-                        else{
-                            Image(user.userImg)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 130, height: 70)
-                                .clipShape(Circle())
-                        }
                         
                         Spacer()
                         
                         HStack(spacing: 8){
                             VStack{
-                                Text("\(user.post)")
+                                Text("\(profile.posts.count)") //user post
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                 Text("Posts")
@@ -54,7 +39,7 @@ struct ProfileView: View {
                             .frame(width: 72)
                             
                             VStack{
-                                Text("\(user.followers)")
+                                Text("\(user.followers)") //user followers
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                 Text("Followers")
@@ -64,7 +49,7 @@ struct ProfileView: View {
                             
                             
                             VStack{
-                                Text("\(user.following)")
+                                Text("\(user.following)") //user following
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                 Text("Following")
@@ -88,12 +73,11 @@ struct ProfileView: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 1)
                     
-                    if user.userName != loggedIn[0].posts[0].userName{
+                    if user.userName != loggedIn[0].posts[0].userName{ //check if the clicked username is not the same as the one logs in
                         Button(action: {
-
-                            checkFollowers()
+                            checkFollowers() //call this func to change the followers
                         }, label: {
-                            Text( isFollowed ? "Unfollow" : "Following")
+                            Text(isFollowed ? "Unfollow" : "Follow")
                                 .foregroundColor(.black)
                                 .fontWeight(.semibold)
                                 .frame(width: 360, height: 32)
@@ -102,22 +86,26 @@ struct ProfileView: View {
                                         .stroke(.gray, lineWidth: 1)
                                 )
                         })
-                        
-                        ForEach(loggedIn[0].posts, id: \.self){post in
-                            VStack{
-                                Text(post.content)
-                                    .frame(width: 370, height: 100)
-                                    .foregroundColor(.black)
-                                    .background(.gray.opacity(0.1))
-                                    .cornerRadius(6)
-                            }
                     }
                     
-                  
-                        
-                          
+                    ForEach(profile.posts.indices, id: \.self){i in
+                        if profile.posts[i].hasImage{
+                            Image(profile.posts[i].content)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 370, height: .infinity)
+                                .cornerRadius(6)
+                                .clipShape(Rectangle())
                         }
-                       
+                        else{
+                            Text(profile.posts[i].content)
+                                .frame(width: 370, height: 100)
+                                .foregroundColor(.black)
+                                .background(.gray.opacity(0.1))
+                                .cornerRadius(6)
+
+                        }
+                    }
                     
                     Spacer()
                     
@@ -128,17 +116,16 @@ struct ProfileView: View {
         }
     }
     func checkFollowers(){
-        isFollowed.toggle()
+        isFollowed.toggle() //change follow/unfollow button
         if(isFollowed && user.userName != loggedIn[0].posts[0].userName){
-            user.followers += 1
+            user.followers += 1 //add 1 to the user when follow button is clicked
         }
         else{
-            user.followers -= 1
+            user.followers -= 1 //add 1 to the user when unfollow button is clicked
         }
     }
 }
 
 #Preview {
-    ProfileView(user: UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever"), loggedIn: [UserInfo(username: "", password: "", posts: [Post(userImage: "thieen", userName: "Thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)])], tabSelected: 3
-    )
+    ProfileView(user: UserProfile(userName: "Thieen", userImg: "thieen", followers: 5, following: 2, post: 1, bio: "Corgi Forever"), loggedIn: [UserInfo(username: "", password: "", posts: [Post(userImage: "thieen", userName: "Thieen", content: "Corgi iz da bezt", caption: "Like if you also like corgi!!!!!!", hasImage: false)])], tabSelected: 3, users: [], profile: UserInfo(username: "", password: "", posts: []))
 }
